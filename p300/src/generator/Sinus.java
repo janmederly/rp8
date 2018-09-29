@@ -35,6 +35,16 @@ public class Sinus {
     	line.close();
     }
     
+    public void playTone(byte[] toneBuffer) throws LineUnavailableException {
+    	final AudioFormat af = new AudioFormat(SAMPLE_RATE, 8, 1, true, true);
+        line = AudioSystem.getSourceDataLine(af);
+        line.open(af, SAMPLE_RATE);
+    	line.start();
+    	int written = line.write(toneBuffer, 0, toneBuffer.length);
+        line.drain();
+    	line.close();
+    }
+  
     public void close() {
         line.drain();
     	line.close();

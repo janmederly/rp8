@@ -8,9 +8,9 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 
 public class Summarizer {
-	public static final int VELKOST_CYKLU = 4000;
-	public static final int RIADOK_OD = 17580;
-	public static final String PORADIE = "00000200000000020000020000020000200002002002000000000000000200000200220202002200000000000200000000000000000002002000000000000000000000000000000002000000000000000000000000000000000200200002000000000000020000200000000000000020002002002000000000002000000000000000000200020000000002220002000000000000000000000002020200000000000000200000000000000000000200000000002002000000000000002220000000000000000002202000000000200020000000202000002000000002000000000200020022000220000000000020";
+	public static final int VELKOST_CYKLU = 2000;
+	public static final int RIADOK_OD = 18035;
+	public static final String PORADIE = "0000002000000200000020000000200000020000000000200000000000000000000000000020000000002000000000000200000000000202020002000000002000000000000000002000000000222000002002020020000000000000000000020000000000000000000000000000000000000020002002000020002002002200000000202000000000000202000000020020002000002000000000000000002";
 
 	public static void main(String[] args) throws IOException {
 		int pocetDobrych = 0;
@@ -23,7 +23,7 @@ public class Summarizer {
 		int a = 0;
 		BufferedReader reader;
 
-			reader = new BufferedReader(new FileReader("/Users/janme/Documents/ocko2.txt"));
+			reader = new BufferedReader(new FileReader("/Users/janme/Documents/ocko5.txt"));
 			
 			
 			int cisloRiadku = 1;
@@ -36,7 +36,7 @@ public class Summarizer {
 				line = line.replaceAll(",", ".");
 				if (cisloRiadku >= RIADOK_OD) {
 					char x = cisla(cisloCyklu);
-					String eeg = line.split("\t")[2];
+					String eeg = line.split("\t")[1];
 					double povodne = Double.valueOf(eeg);
 					if (x == '2') {
 						dobre[poziciaVCykle] = dobre[poziciaVCykle] + povodne;
@@ -56,14 +56,14 @@ public class Summarizer {
 
 			reader.close();
 
-		PrintWriter pw = new PrintWriter(new FileWriter("subor.csv"));
-		for (int b = 0; b < 4000; b++) {
+		PrintWriter pw = new PrintWriter(new FileWriter("subor.txt"));
+		for (int b = 0; b < VELKOST_CYKLU; b++) {
 			pw.println(String.valueOf(dobre[b] / pocetDobrych).replace('.', ','));
 		}
 		pw.close();
 
-		PrintWriter pw2 = new PrintWriter(new FileWriter("subor2.csv"));
-		for (int g = 0; g < 4000; g++) {
+		PrintWriter pw2 = new PrintWriter(new FileWriter("subor2.txt"));
+		for (int g = 0; g < VELKOST_CYKLU; g++) {
 			pw2.println(String.valueOf(zle[g] / pocetZlych).replace('.', ','));
 		}
 		pw2.close();
